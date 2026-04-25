@@ -109,8 +109,8 @@
     .proj-desc { font-size:.87rem; color:var(--muted); line-height:1.7; margin-bottom:1.1rem; flex:1; }
     .tech-pills { display:flex; flex-wrap:wrap; gap:.4rem; margin-bottom:1.1rem; }
     .pill { background:rgba(91,159,255,.08); border:1px solid rgba(91,159,255,.2); color:var(--accent2); border-radius:100px; padding:.2rem .65rem; font-family:'DM Mono',monospace; font-size:.7rem; }
-    .gh-link { display:inline-flex; align-items:center; gap:.5rem; font-family:'DM Mono',monospace; font-size:.74rem; color:var(--muted); transition:color .2s,gap .2s; border-top:1px solid var(--border); padding-top:1rem; margin-top:auto; }
-    .gh-link:hover { color:var(--accent); gap:.75rem; }
+    .gh-link, .web-link { display:inline-flex; align-items:center; gap:.5rem; font-family:'DM Mono',monospace; font-size:.74rem; color:var(--muted); transition:color .2s,gap .2s; border-top:1px solid var(--border); padding-top:1rem; margin-top:auto; }
+    .gh-link:hover, .web-link:hover { color:var(--accent); gap:.75rem; }
     .all-repos { text-align:center; margin-top:2.5rem; }
 
     /* EDUCATION */
@@ -133,9 +133,9 @@
 
     /* CERTS */
     .certs-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1.2rem; }
-    .cert-card { background:var(--card); border:1px solid var(--border); border-radius:var(--r); overflow:hidden; transition:all .3s; }
+    .cert-card { background:var(--card); border:1px solid var(--border); border-radius:var(--r); overflow:hidden; transition:all .3s; cursor:pointer; }
     .cert-card:hover { border-color:rgba(126,247,200,.3); transform:translateY(-3px); box-shadow:0 16px 40px rgba(0,0,0,.3); }
-    .cert-img-wrap { width:100%; height:165px; overflow:hidden; background:var(--surface); }
+    .cert-img-wrap { width:100%; height:165px; overflow:hidden; background:var(--surface); pointer-events:auto; }
     .cert-img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .4s; }
     .cert-card:hover .cert-img { transform:scale(1.05); }
     .cert-ph { width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.5rem; background:linear-gradient(135deg,var(--surface),var(--card)); }
@@ -144,6 +144,12 @@
     .cert-body { padding:1.2rem; }
     .cert-issuer { font-family:'DM Mono',monospace; font-size:.68rem; color:var(--accent); letter-spacing:.12em; text-transform:uppercase; margin-bottom:.35rem; }
     .cert-name { font-size:.92rem; color:var(--text); font-weight:600; line-height:1.35; }
+
+    /* Modal for certificate images */
+    .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); backdrop-filter: blur(8px); align-items: center; justify-content: center; cursor: pointer; }
+    .modal-content { max-width: 90%; max-height: 90%; object-fit: contain; border-radius: 8px; border: 1px solid var(--accent); box-shadow: 0 0 32px rgba(126,247,200,.2); }
+    .close-modal { position: absolute; top: 24px; right: 32px; color: var(--accent); font-size: 40px; font-weight: bold; transition: 0.2s; font-family: monospace; cursor: pointer; }
+    .close-modal:hover { color: var(--text); transform: scale(1.1); }
 
     /* CONTACT */
     #contact { text-align:center; padding:6rem 2.5rem 8rem; }
@@ -175,12 +181,15 @@
       section { padding:4rem 1.5rem; }
       .edu-card { grid-template-columns:1fr; }
       .edu-date,.edu-loc { text-align:left; }
+      .modal-content { max-width: 95%; max-height: 85%; }
+      .close-modal { top: 16px; right: 24px; font-size: 32px; }
     }
   </style>
 </head>
 <body>
 
 <div id="cg"></div>
+<div id="imageModal" class="modal"><span class="close-modal">&times;</span><img class="modal-content" id="modalImg"></div>
 
 <nav id="nav">
   <span class="nav-logo">RM<span>.dev</span></span>
@@ -204,28 +213,18 @@
   <div class="blob2"></div>
   <div class="hero-inner">
     <div>
-      <p class="hero-tag"> Prospective Computer Science Student • Focused on Machine Learning</p>
+      <p class="hero-tag">Prospective Computer Science Student • Machine Learning Focused</p>
       <h1 class="hero-name">Raiyan<br><em>Mahmud</em></h1>
       <p class="hero-sub">Computer Science applicant with a strong foundation in Python, machine learning, and data analysis. Experienced in building practical ML models, NLP systems, and automation tools with a focus on solving real-world problems.</p>
       <div class="hero-btns">
-        <a href="#projects" class="btn btn-primary">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
-          View Projects
-        </a>
-        <a href="#contact" class="btn btn-ghost">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
-          Get in Touch
-        </a>
+        <a href="#projects" class="btn btn-primary"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>View Projects</a>
+        <a href="#contact" class="btn btn-ghost"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>Get in Touch</a>
       </div>
     </div>
     <div class="profile-card">
       <div class="profile-img-wrap">
-        <img src="images/profile.jpg" alt="Raiyan Mahmud" class="profile-img"
-          onerror="this.style.display='none';document.getElementById('pp').style.display='flex'">
-        <div class="profile-ph" id="pp" style="display:none">
-          <svg width="52" height="52" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-          <p>profile.jpg</p>
-        </div>
+        <img src="images/profile.jpg" alt="Raiyan Mahmud" class="profile-img" onerror="this.style.display='none';document.getElementById('pp').style.display='flex'">
+        <div class="profile-ph" id="pp" style="display:none"><svg width="52" height="52" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><p>profile.jpg</p></div>
         <div class="loc-badge"><span class="live-dot"></span>Dhaka, Bangladesh</div>
       </div>
     </div>
@@ -234,15 +233,11 @@
 
 <div class="divider"></div>
 
-<!-- ABOUT SECTION -->
+<!-- ABOUT -->
 <section id="about">
   <p class="s-label rev"> Introduction</p>
   <h2 class="s-title rev">About Me</h2>
-  <div class="skill-card rev" style="background:var(--card); padding:2rem;">
-    <p style="color:var(--text); line-height:1.7; font-size:1rem;">I am a prospective Computer Science student from Bangladesh with a strong academic background and a growing focus on machine learning and data-driven systems.</p>
-    <p style="color:var(--muted); margin-top:1rem; line-height:1.7;">My work centers on applying algorithms and statistical models to real-world problems, including image classification, natural language processing, and predictive analytics. I enjoy building end-to-end solutions—from data collection and preprocessing to model training and evaluation.</p>
-    <p style="color:var(--muted); margin-top:1rem; line-height:1.7;">Currently, I am focused on strengthening my practical skills in Python, deep learning, and backend development, with the goal of building scalable and impactful software systems.</p>
-  </div>
+  <div class="skill-card rev" style="background:var(--card); padding:2rem;"><p style="color:var(--text); line-height:1.7;">I am a prospective Computer Science student from Bangladesh with a strong academic background and a growing focus on machine learning and data-driven systems.</p><p style="color:var(--muted); margin-top:1rem;">My work centers on applying algorithms and statistical models to real-world problems, including image classification, natural language processing, and predictive analytics. I enjoy building end-to-end solutions—from data collection and preprocessing to model training and evaluation.</p><p style="color:var(--muted); margin-top:1rem;">Currently, I am focused on strengthening my practical skills in Python, deep learning, and backend development, with the goal of building scalable and impactful software systems.</p></div>
 </section>
 
 <div class="divider"></div>
@@ -255,7 +250,7 @@
     <div class="skill-card"><p class="sk-title">Programming</p><div class="tag-wrap"><span class="tag">Python</span><span class="tag">JavaScript</span></div></div>
     <div class="skill-card"><p class="sk-title">Web & Databases</p><div class="tag-wrap"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">SQL</span></div></div>
     <div class="skill-card"><p class="sk-title">Tools & Libraries</p><div class="tag-wrap"><span class="tag">Git</span><span class="tag">VS Code</span><span class="tag">TensorFlow</span><span class="tag">Pandas</span><span class="tag">BeautifulSoup</span></div></div>
-    <div class="skill-card"><p class="sk-title">Core Areas</p><div class="tag-wrap"><span class="tag">Data Structures & Algorithms</span><span class="tag">Machine Learning</span><span class="tag">Natural Language Processing</span><span class="tag">Deep Learning</span><span class="tag">Regression Analysis</span></div></div>
+    <div class="skill-card"><p class="sk-title">Core Areas</p><div class="tag-wrap"><span class="tag">Data Structures & Algorithms</span><span class="tag">Machine Learning</span><span class="tag">NLP</span><span class="tag">Deep Learning</span><span class="tag">Regression</span></div></div>
   </div>
 </section>
 
@@ -266,11 +261,23 @@
   <p class="s-label rev"> Work</p>
   <h2 class="s-title rev">Projects</h2>
   <div class="projects-grid">
+    <!-- 1: Cats & Dogs -->
     <div class="project-card rev"><p class="proj-num">01</p><h3 class="proj-name">Cats & Dogs Image Classifier</h3><p class="proj-desc">Developed a convolutional neural network (CNN) to classify images of cats and dogs using a dataset of 25,000+ images. Applied data augmentation techniques to improve generalization and increased model accuracy from baseline performance to approximately 74% on test data.</p><div class="tech-pills"><span class="pill">Python</span><span class="pill">TensorFlow</span><span class="pill">CNN</span></div><a href="https://github.com/raiyan-mahmud-git/Cats-and-dogs-image-classifier" target="_blank" rel="noopener" class="gh-link"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg> Visit this project on GitHub</a></div>
-    <div class="project-card rev"><p class="proj-num">02</p><h3 class="proj-name">Health Cost Prediction</h3><p class="proj-desc">Built a regression model to predict individual health insurance costs using structured data. Implemented data preprocessing, feature encoding, and model optimization pipelines to improve prediction accuracy and reliability.</p><div class="tech-pills"><span class="pill">Python</span><span class="pill">TensorFlow</span><span class="pill">Regression</span></div><a href="https://github.com/raiyan-mahmud-git/predict_health_costs_with_regression" target="_blank" rel="noopener" class="gh-link"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg> Visit this project on GitHub</a></div>
-    <div class="project-card rev"><p class="proj-num">03</p><h3 class="proj-name">SMS Spam Classifier</h3><p class="proj-desc">Designed an NLP-based spam detection system using TF-IDF vectorization and Naive Bayes classification. Achieved high precision in identifying spam messages by optimizing text preprocessing and feature extraction techniques.</p><div class="tech-pills"><span class="pill">Python</span><span class="pill">NLP</span><span class="pill">TF-IDF</span><span class="pill">Naive Bayes</span></div><a href="https://github.com/raiyan-mahmud-git/Spam-classifier" target="_blank" rel="noopener" class="gh-link"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg> Visit this project on GitHub</a></div>
-    <div class="project-card rev"><p class="proj-num">04</p><h3 class="proj-name">Sea Level Predictor</h3><p class="proj-desc">Analyzed historical global sea level data and applied linear regression models to forecast long-term trends up to 2050. Visualized data patterns and trends using Python and Pandas.</p><div class="tech-pills"><span class="pill">Python</span><span class="pill">Pandas</span><span class="pill">Linear Regression</span></div><a href="https://github.com/raiyan-mahmud-git/sea_level_predictor" target="_blank" rel="noopener" class="gh-link"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg> Visit this project on GitHub</a></div>
-    <div class="project-card rev"><p class="proj-num">05</p><h3 class="proj-name">Book Price Scraper</h3><p class="proj-desc">Developed a web scraping tool using BeautifulSoup to extract structured data including book prices and availability from online sources. Automated data collection and exported results into clean CSV format for analysis.</p><div class="tech-pills"><span class="pill">Python</span><span class="pill">BeautifulSoup</span><span class="pill">Web Scraping</span></div><a href="https://github.com/raiyan-mahmud-git/book_Price_Scraper" target="_blank" rel="noopener" class="gh-link"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg> Visit this project on GitHub</a></div>
+    
+    <!-- 2: FLO - Live web app -->
+    <div class="project-card rev"><p class="proj-num">02</p><h3 class="proj-name">Flo — Personal Finance Tracker</h3><p class="proj-desc">A modern, responsive personal finance tracker that enables users to record income and expenses, set budgets, and monitor spending with real-time updates. Built as a browser-based app with a clean, intuitive UI and local storage for seamless data management without a backend.</p><div class="tech-pills"><span class="pill">JavaScript</span><span class="pill">HTML/CSS</span><span class="pill">LocalStorage API</span></div><a href="https://raiyan-mahmud-git.github.io/finance-tracker/" target="_blank" rel="noopener" class="web-link"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H5.78a1.65 1.65 0 0 0-1.51 1 1.65 1.65 0 0 0 .33 1.82l.07.08A8.9 8.9 0 0 0 12 18a8.9 8.9 0 0 0 6.18-2.72l.07-.08z"/><path d="M4.6 9a1.65 1.65 0 0 0-.33 1.82c.25.59.84 1 1.51 1h12.44c.67 0 1.26-.41 1.51-1a1.65 1.65 0 0 0-.33-1.82l-.07-.08A8.9 8.9 0 0 0 12 6a8.9 8.9 0 0 0-6.18 2.72l-.07.08z"/></svg> Visit the web app → Flo</a></div>
+    
+    <!-- 3: Health Cost Prediction -->
+    <div class="project-card rev"><p class="proj-num">03</p><h3 class="proj-name">Health Cost Prediction</h3><p class="proj-desc">Built a regression model to predict individual health insurance costs using structured data. Implemented data preprocessing, feature encoding, and model optimization pipelines to improve prediction accuracy and reliability.</p><div class="tech-pills"><span class="pill">Python</span><span class="pill">TensorFlow</span><span class="pill">Regression</span></div><a href="https://github.com/raiyan-mahmud-git/predict_health_costs_with_regression" target="_blank" rel="noopener" class="gh-link"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg> Visit this project on GitHub</a></div>
+    
+    <!-- 4: SMS Spam Classifier -->
+    <div class="project-card rev"><p class="proj-num">04</p><h3 class="proj-name">SMS Spam Classifier</h3><p class="proj-desc">Designed an NLP-based spam detection system using TF-IDF vectorization and Naive Bayes classification. Achieved high precision in identifying spam messages by optimizing text preprocessing and feature extraction techniques.</p><div class="tech-pills"><span class="pill">Python</span><span class="pill">NLP</span><span class="pill">TF-IDF</span><span class="pill">Naive Bayes</span></div><a href="https://github.com/raiyan-mahmud-git/Spam-classifier" target="_blank" rel="noopener" class="gh-link"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg> Visit this project on GitHub</a></div>
+    
+    <!-- 5: Sea Level Predictor -->
+    <div class="project-card rev"><p class="proj-num">05</p><h3 class="proj-name">Sea Level Predictor</h3><p class="proj-desc">Analyzed historical global sea level data and applied linear regression models to forecast long-term trends up to 2050. Visualized data patterns and trends using Python and Pandas.</p><div class="tech-pills"><span class="pill">Python</span><span class="pill">Pandas</span><span class="pill">Linear Regression</span></div><a href="https://github.com/raiyan-mahmud-git/sea_level_predictor" target="_blank" rel="noopener" class="gh-link"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg> Visit this project on GitHub</a></div>
+    
+    <!-- 6: Book Price Scraper -->
+    <div class="project-card rev"><p class="proj-num">06</p><h3 class="proj-name">Book Price Scraper</h3><p class="proj-desc">Developed a web scraping tool using BeautifulSoup to extract structured data including book prices and availability from online sources. Automated data collection and exported results into clean CSV format for analysis.</p><div class="tech-pills"><span class="pill">Python</span><span class="pill">BeautifulSoup</span><span class="pill">Web Scraping</span></div><a href="https://github.com/raiyan-mahmud-git/book_Price_Scraper" target="_blank" rel="noopener" class="gh-link"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg> Visit this project on GitHub</a></div>
   </div>
   <div class="all-repos rev"><a href="https://github.com/raiyan-mahmud-git?tab=repositories" target="_blank" rel="noopener" class="btn btn-ghost"><svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg> View All Repositories</a></div>
 </section>
@@ -281,16 +288,7 @@
 <section id="experience">
   <p class="s-label rev"> </p>
   <h2 class="s-title rev">Experience</h2>
-  <div class="skill-card rev" style="background:var(--card); padding:2rem;">
-    <p style="font-family:'DM Mono',monospace; font-size:.7rem; color:var(--accent); letter-spacing:.1em;">INDEPENDENT PROJECTS & SELF-DIRECTED LEARNING</p>
-    <p style="color:var(--muted); margin:.5rem 0 1rem 0; font-size:.85rem;">2023 – Present</p>
-    <ul style="list-style:none; color:var(--text); line-height:1.7;">
-      <li style="margin-bottom:.6rem;">• Designed and implemented multiple machine learning and data analysis projects</li>
-      <li style="margin-bottom:.6rem;">• Built end-to-end pipelines including data preprocessing, model training, and evaluation</li>
-      <li style="margin-bottom:.6rem;">• Practiced real-world problem solving through applied Python development</li>
-      <li>• Continuously learning advanced topics in machine learning, deep learning, and backend systems</li>
-    </ul>
-  </div>
+  <div class="skill-card rev" style="background:var(--card); padding:2rem;"><p style="font-family:'DM Mono',monospace; font-size:.7rem; color:var(--accent); letter-spacing:.1em;">INDEPENDENT PROJECTS & SELF-DIRECTED LEARNING</p><p style="color:var(--muted); margin:.5rem 0 1rem 0; font-size:.85rem;">2023 – Present</p><ul style="list-style:none; color:var(--text); line-height:1.7;"><li>• Designed and implemented multiple machine learning and data analysis projects</li><li>• Built end-to-end pipelines including data preprocessing, model training, and evaluation</li><li>• Practiced real-world problem solving through applied Python development</li><li>• Continuously learning advanced topics in machine learning, deep learning, and backend systems</li></ul></div>
 </section>
 
 <div class="divider"></div>
@@ -299,10 +297,7 @@
 <section id="education">
   <p class="s-label rev"> Background</p>
   <h2 class="s-title rev">Education</h2>
-  <div class="edu-list">
-    <div class="edu-card rev"><div><h3 class="edu-school">Govt. Bangabandhu College</h3><p class="edu-deg">Higher Secondary Certificate (Science)</p><div class="score-wrap"><span class="score">GPA 4.92 / 5.00</span><span class="score">Mathematics: 198/200</span><span class="score">Physics: 165/200</span><span class="score">Chemistry: 182/200</span></div></div><div><p class="edu-date">July 2024</p><p class="edu-loc">Gopalganj, BD</p></div></div>
-    <div class="edu-card rev"><div><h3 class="edu-school">Kashiani G.C. Pilot High School</h3><p class="edu-deg">Secondary School Certificate (Science)</p><div class="score-wrap"><span class="score">GPA 5.00 / 5.00</span><span class="score">A+ in Mathematics, Physics, Chemistry</span></div></div><div><p class="edu-date">October 2022</p><p class="edu-loc">Kashiani, BD</p></div></div>
-  </div>
+  <div class="edu-list"><div class="edu-card rev"><div><h3 class="edu-school">Govt. Bangabandhu College</h3><p class="edu-deg">Higher Secondary Certificate (Science)</p><div class="score-wrap"><span class="score">GPA 4.92 / 5.00</span><span class="score">Mathematics: 198/200</span><span class="score">Physics: 165/200</span><span class="score">Chemistry: 182/200</span></div></div><div><p class="edu-date">July 2024</p><p class="edu-loc">Gopalganj, BD</p></div></div><div class="edu-card rev"><div><h3 class="edu-school">Kashiani G.C. Pilot High School</h3><p class="edu-deg">Secondary School Certificate (Science)</p><div class="score-wrap"><span class="score">GPA 5.00 / 5.00</span><span class="score">A+ in Mathematics, Physics, Chemistry</span></div></div><div><p class="edu-date">October 2022</p><p class="edu-loc">Kashiani, BD</p></div></div></div>
 </section>
 
 <div class="divider"></div>
@@ -311,74 +306,97 @@
 <section id="achievements">
   <p class="s-label rev"> </p>
   <h2 class="s-title rev">Achievements</h2>
-  <div class="skills-grid rev">
-    <div class="skill-card"><p class="sk-title">Academic Excellence</p><div class="tag-wrap"><span class="tag">GPA 5.00 / 5.00 (SSC)</span><span class="tag">GPA 4.92 / 5.00 (HSC)</span><span class="tag">IELTS 7.5 (Fluent English)</span></div></div>
-    <div class="skill-card"><p class="sk-title">Distinctions</p><div class="tag-wrap"><span class="tag">Top 2% in Mathematics (HSC)</span><span class="tag">Merit in Physics & Chemistry</span></div></div>
-  </div>
+  <div class="skills-grid rev"><div class="skill-card"><p class="sk-title">Academic Excellence</p><div class="tag-wrap"><span class="tag">GPA 5.00 / 5.00 (SSC)</span><span class="tag">GPA 4.92 / 5.00 (HSC)</span><span class="tag">IELTS 7.5 (Fluent English)</span></div></div><div class="skill-card"><p class="sk-title">Distinctions</p><div class="tag-wrap"><span class="tag">Top 2% in Mathematics (HSC)</span><span class="tag">Merit in Physics & Chemistry</span></div></div></div>
 </section>
 
 <div class="divider"></div>
 
-<!-- LANGUAGES-->
-<section id="languages">
-  <p class="s-label rev"> </p>
-  <h2 class="s-title rev">Languages</h2>
-  <div class="lang-row rev">
-    <div class="lang-card"><p class="lang-name">Bengali</p><p class="lang-level">Native</p></div>
-    <div class="lang-card"><p class="lang-name">English</p><p class="lang-level">Fluent (IELTS 7.5)</p></div>
-    <div class="lang-card"><p class="lang-name">Hindi</p><p class="lang-level">Fluent</p></div>
-  </div>
-</section>
+<!-- LANGUAGES -->
+<section id="languages"><p class="s-label rev"> </p><h2 class="s-title rev">Languages</h2><div class="lang-row rev"><div class="lang-card"><p class="lang-name">Bengali</p><p class="lang-level">Native</p></div><div class="lang-card"><p class="lang-name">English</p><p class="lang-level">Fluent (IELTS 7.5)</p></div><div class="lang-card"><p class="lang-name">Hindi</p><p class="lang-level">Fluent</p></div></div></section>
 
 <div class="divider"></div>
 
 <!-- CERTIFICATIONS -->
-<section id="certifications">
-  <p class="s-label rev"> Credentials</p>
-  <h2 class="s-title rev">Certifications</h2>
-  <div class="certs-grid">
-    <div class="cert-card rev"><div class="cert-img-wrap"><img src="images/cert-ml-freecodecamp.jpg" alt="ML cert" class="cert-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="cert-ph" style="display:none"><svg width="34" height="34" fill="none" stroke="var(--accent)" stroke-width="1.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg><span>cert-ml-freecodecamp.jpg</span></div></div><div class="cert-body"><p class="cert-issuer">FreeCodeCamp</p><p class="cert-name">Machine Learning with Python</p></div></div>
-    <div class="cert-card rev"><div class="cert-img-wrap"><img src="images/cert-ai-ibm.jpg" alt="AI cert" class="cert-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="cert-ph" style="display:none"><svg width="34" height="34" fill="none" stroke="var(--accent)" stroke-width="1.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg><span>cert-ai-ibm.jpg</span></div></div><div class="cert-body"><p class="cert-issuer">IBM</p><p class="cert-name">Artificial Intelligence Fundamentals</p></div></div>
-    <div class="cert-card rev"><div class="cert-img-wrap"><img src="images/cert-data-freecodecamp.jpg" alt="Data cert" class="cert-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="cert-ph" style="display:none"><svg width="34" height="34" fill="none" stroke="var(--accent)" stroke-width="1.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg><span>cert-data-freecodecamp.jpg</span></div></div><div class="cert-body"><p class="cert-issuer">FreeCodeCamp</p><p class="cert-name">Data Analysis with Python</p></div></div>
-    <div class="cert-card rev"><div class="cert-img-wrap"><img src="images/cert-ds-hp.jpg" alt="DS cert" class="cert-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="cert-ph" style="display:none"><svg width="34" height="34" fill="none" stroke="var(--accent)" stroke-width="1.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg><span>cert-ds-hp.jpg</span></div></div><div class="cert-body"><p class="cert-issuer">HP LIFE Foundation</p><p class="cert-name">Data Science & Analytics</p></div></div>
-    <div class="cert-card rev"><div class="cert-img-wrap"><img src="images/cert-sql-sololearn.jpg" alt="SQL cert" class="cert-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="cert-ph" style="display:none"><svg width="34" height="34" fill="none" stroke="var(--accent)" stroke-width="1.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg><span>cert-sql-sololearn.jpg</span></div></div><div class="cert-body"><p class="cert-issuer">SoloLearn</p><p class="cert-name">SQL Intermediate</p></div></div>
-  </div>
-</section>
+<section id="certifications"><p class="s-label rev"> Credentials</p><h2 class="s-title rev">Certifications</h2><div class="certs-grid" id="certGrid"></div></section>
 
 <div class="divider"></div>
 
 <!-- CONTACT -->
-<section id="contact">
-  <p class="s-label rev"></p>
-  <h2 class="s-title rev">Let's Connect</h2>
-  <p class="contact-sub rev">I am open to academic opportunities, collaborations, and projects in computer science, machine learning, and software development.</p>
-  <div class="contact-links rev">
-    <a href="mailto:raiyanmahmud484@gmail.com" class="c-link"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg> raiyanmahmud484@gmail.com</a>
-    <a href="tel:+8801621821252" class="c-link"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.81a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg> +880 1621 821252</a>
-    <a href="https://github.com/raiyan-mahmud-git" target="_blank" rel="noopener" class="c-link"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg> github.com/raiyan-mahmud-git</a>
-    <a href="https://www.facebook.com/share/1DYBEQPL3E/" target="_blank" rel="noopener" class="c-link"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg> Facebook</a>
-    <a href="https://www.linkedin.com/in/raiyan-mahmud-475030374" target="_blank" rel="noopener" class="c-link"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 1 1 8.25 6.5 1.75 1.75 0 0 1 6.5 8.25zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0 0 13 14.19a.7.7 0 0 0 0 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 0 1 2.7-1.45c1.55 0 3.36.86 3.36 3.66z"/></svg> LinkedIn</a>
-    <a href="https://www.instagram.com/raiyanmahmud47?igsh=eDJrenBwMTIyazBo" target="_blank" rel="noopener" class="c-link"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4.5"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> Instagram</a>
-  </div>
-</section>
+<section id="contact"><p class="s-label rev"></p><h2 class="s-title rev">Let's Connect</h2><p class="contact-sub rev">I am open to academic opportunities, collaborations, and projects in computer science, machine learning, and software development.</p><div class="contact-links rev"><a href="mailto:raiyanmahmud484@gmail.com" class="c-link"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg> raiyanmahmud484@gmail.com</a><a href="tel:+8801621821252" class="c-link"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.81a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg> +880 1621 821252</a><a href="https://github.com/raiyan-mahmud-git" target="_blank" rel="noopener" class="c-link"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg> github.com/raiyan-mahmud-git</a><a href="https://www.facebook.com/share/1DYBEQPL3E/" target="_blank" rel="noopener" class="c-link"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg> Facebook</a><a href="https://www.linkedin.com/in/raiyan-mahmud-475030374" target="_blank" rel="noopener" class="c-link"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 1 1 8.25 6.5 1.75 1.75 0 0 1 6.5 8.25zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0 0 13 14.19a.7.7 0 0 0 0 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 0 1 2.7-1.45c1.55 0 3.36.86 3.36 3.66z"/></svg> LinkedIn</a><a href="https://www.instagram.com/raiyanmahmud47?igsh=eDJrenBwMTIyazBo" target="_blank" rel="noopener" class="c-link"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4.5"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> Instagram</a></div></section>
 
-<footer>
-  <p>Designed &amp; built by Raiyan Mahmud &nbsp;&middot;&nbsp; <span id="yr"></span></p>
-</footer>
+<footer><p>Designed &amp; built by Raiyan Mahmud &nbsp;&middot;&nbsp; <span id="yr"></span></p></footer>
 
 <script>
+  // Year update
   document.getElementById('yr').textContent = new Date().getFullYear();
-  var cg = document.getElementById('cg');
-  document.addEventListener('mousemove', function(e) { cg.style.left = e.clientX + 'px'; cg.style.top  = e.clientY + 'px'; });
-  var nav = document.getElementById('nav');
-  window.addEventListener('scroll', function() { nav.classList.toggle('scrolled', window.scrollY > 20); });
-  var ham = document.getElementById('ham');
-  var nl  = document.getElementById('navLinks');
-  ham.addEventListener('click', function() { ham.classList.toggle('open'); nl.classList.toggle('open'); });
-  nl.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', function() { ham.classList.remove('open'); nl.classList.remove('open'); }); });
-  var obs = new IntersectionObserver(function(entries) { entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); } }); }, { threshold: 0.08 });
-  document.querySelectorAll('.rev').forEach(function(el) { obs.observe(el); });
-  document.querySelectorAll('.project-card').forEach(function(card) { card.addEventListener('mousemove', function(e) { var r = card.getBoundingClientRect(); card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%'); card.style.setProperty('--my', ((e.clientY - r.top)  / r.height * 100).toFixed(1) + '%'); }); });
+  // Cursor glow
+  let cg = document.getElementById('cg');
+  document.addEventListener('mousemove', (e) => { cg.style.left = e.clientX + 'px'; cg.style.top = e.clientY + 'px'; });
+  // Nav scroll & hamburger
+  let nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20));
+  let ham = document.getElementById('ham'), nl = document.getElementById('navLinks');
+  ham.addEventListener('click', () => { ham.classList.toggle('open'); nl.classList.toggle('open'); });
+  nl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { ham.classList.remove('open'); nl.classList.remove('open'); }));
+  // Scroll reveal
+  let obs = new IntersectionObserver((entries) => entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('on'); obs.unobserve(e.target); } }), { threshold: 0.08 });
+  document.querySelectorAll('.rev').forEach(el => obs.observe(el));
+  // Project card spotlight
+  document.querySelectorAll('.project-card').forEach(card => card.addEventListener('mousemove', function(e) { let r = this.getBoundingClientRect(); this.style.setProperty('--mx', ((e.clientX - r.left)/r.width*100).toFixed(1)+'%'); this.style.setProperty('--my', ((e.clientY - r.top)/r.height*100).toFixed(1)+'%'); }));
+
+  // Certificate data: image path, issuer, name
+  const certificates = [
+    { src: "images/cert-ml-freecodecamp.jpg", alt: "ML cert", issuer: "FreeCodeCamp", name: "Machine Learning with Python" },
+    { src: "images/cert-ai-ibm.jpg", alt: "AI cert", issuer: "IBM", name: "Artificial Intelligence Fundamentals" },
+    { src: "images/cert-data-freecodecamp.jpg", alt: "Data cert", issuer: "FreeCodeCamp", name: "Data Analysis with Python" },
+    { src: "images/cert-ds-hp.jpg", alt: "DS cert", issuer: "HP LIFE Foundation", name: "Data Science & Analytics" },
+    { src: "images/cert-sql-sololearn.jpg", alt: "SQL cert", issuer: "SoloLearn", name: "SQL Intermediate" }
+  ];
+
+  const certGrid = document.getElementById('certGrid');
+  const modal = document.getElementById('imageModal');
+  const modalImg = document.getElementById('modalImg');
+  const closeModal = document.querySelector('.close-modal');
+
+  certificates.forEach(cert => {
+    const card = document.createElement('div');
+    card.className = 'cert-card rev';
+    const imgWrap = document.createElement('div');
+    imgWrap.className = 'cert-img-wrap';
+    const img = document.createElement('img');
+    img.src = cert.src;
+    img.alt = cert.alt;
+    img.className = 'cert-img';
+    img.onerror = function() { this.style.display='none'; this.nextElementSibling.style.display='flex'; };
+    const fallbackDiv = document.createElement('div');
+    fallbackDiv.className = 'cert-ph';
+    fallbackDiv.style.display = 'none';
+    fallbackDiv.innerHTML = `<svg width="34" height="34" fill="none" stroke="var(--accent)" stroke-width="1.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg><span>${cert.src.split('/').pop()}</span>`;
+    imgWrap.appendChild(img);
+    imgWrap.appendChild(fallbackDiv);
+    const bodyDiv = document.createElement('div');
+    bodyDiv.className = 'cert-body';
+    bodyDiv.innerHTML = `<p class="cert-issuer">${cert.issuer}</p><p class="cert-name">${cert.name}</p>`;
+    card.appendChild(imgWrap);
+    card.appendChild(bodyDiv);
+    
+    card.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (img.complete && img.naturalHeight !== 0) {
+        modalImg.src = cert.src;
+      } else {
+        // fallback
+        modalImg.src = cert.src;
+      }
+      modal.style.display = 'flex';
+    });
+    certGrid.appendChild(card);
+  });
+
+  // Modal close handlers
+  closeModal.onclick = () => modal.style.display = 'none';
+  modal.onclick = (e) => { if(e.target === modal) modal.style.display = 'none'; };
 </script>
 </body>
-</html>
+</htm>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 </html>
