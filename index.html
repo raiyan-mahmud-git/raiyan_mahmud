@@ -131,16 +131,16 @@
     .lang-name  { font-family:'DM Serif Display',Georgia,serif; font-size:1.2rem; color:var(--warm); margin-bottom:.25rem; }
     .lang-level { font-family:'DM Mono',monospace; font-size:.7rem; color:var(--accent); letter-spacing:.08em; text-transform:uppercase; }
 
-    /* CERTS */
+    /* CERTS - FIXED */
     .certs-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1.2rem; }
     .cert-card { background:var(--card); border:1px solid var(--border); border-radius:var(--r); overflow:hidden; transition:all .3s; cursor:pointer; }
     .cert-card:hover { border-color:rgba(126,247,200,.3); transform:translateY(-3px); box-shadow:0 16px 40px rgba(0,0,0,.3); }
-    .cert-img-wrap { width:100%; height:165px; overflow:hidden; background:var(--surface); pointer-events:auto; }
+    .cert-img-wrap { width:100%; height:165px; overflow:hidden; background:var(--surface); position:relative; }
     .cert-img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .4s; }
     .cert-card:hover .cert-img { transform:scale(1.05); }
-    .cert-ph { width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.5rem; background:linear-gradient(135deg,var(--surface),var(--card)); }
-    .cert-ph svg { opacity:.2; }
-    .cert-ph span { font-family:'DM Mono',monospace; font-size:.68rem; color:var(--muted); letter-spacing:.08em; }
+    .cert-ph { position:absolute; top:0; left:0; width:100%; height:100%; display:none; flex-direction:column; align-items:center; justify-content:center; gap:.5rem; background:linear-gradient(135deg,var(--surface),var(--card)); }
+    .cert-ph svg { opacity:.2; width:42px; height:42px; }
+    .cert-ph span { font-family:'DM Mono',monospace; font-size:.68rem; color:var(--muted); letter-spacing:.08em; text-align:center; padding:0 8px; }
     .cert-body { padding:1.2rem; }
     .cert-issuer { font-family:'DM Mono',monospace; font-size:.68rem; color:var(--accent); letter-spacing:.12em; text-transform:uppercase; margin-bottom:.35rem; }
     .cert-name { font-size:.92rem; color:var(--text); font-weight:600; line-height:1.35; }
@@ -316,8 +316,12 @@
 
 <div class="divider"></div>
 
-<!-- CERTIFICATIONS -->
-<section id="certifications"><p class="s-label rev"> Credentials</p><h2 class="s-title rev">Certifications</h2><div class="certs-grid" id="certGrid"></div></section>
+<!-- CERTIFICATIONS - FIXED: Images visible from the start -->
+<section id="certifications">
+  <p class="s-label rev"> Credentials</p>
+  <h2 class="s-title rev">Certifications</h2>
+  <div class="certs-grid" id="certGrid"></div>
+</section>
 
 <div class="divider"></div>
 
@@ -329,83 +333,94 @@
 <script>
   // Year update
   document.getElementById('yr').textContent = new Date().getFullYear();
+  
   // Cursor glow
   let cg = document.getElementById('cg');
   document.addEventListener('mousemove', (e) => { cg.style.left = e.clientX + 'px'; cg.style.top = e.clientY + 'px'; });
+  
   // Nav scroll & hamburger
   let nav = document.getElementById('nav');
   window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20));
   let ham = document.getElementById('ham'), nl = document.getElementById('navLinks');
   ham.addEventListener('click', () => { ham.classList.toggle('open'); nl.classList.toggle('open'); });
   nl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { ham.classList.remove('open'); nl.classList.remove('open'); }));
+  
   // Scroll reveal
   let obs = new IntersectionObserver((entries) => entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('on'); obs.unobserve(e.target); } }), { threshold: 0.08 });
   document.querySelectorAll('.rev').forEach(el => obs.observe(el));
+  
   // Project card spotlight
   document.querySelectorAll('.project-card').forEach(card => card.addEventListener('mousemove', function(e) { let r = this.getBoundingClientRect(); this.style.setProperty('--mx', ((e.clientX - r.left)/r.width*100).toFixed(1)+'%'); this.style.setProperty('--my', ((e.clientY - r.top)/r.height*100).toFixed(1)+'%'); }));
 
-// Certificate data: image path, issuer, name
-const certificates = [
-  { src: "images/cert-ml-freecodecamp.jpg", alt: "ML cert", issuer: "FreeCodeCamp", name: "Machine Learning with Python" },
-  { src: "images/cert-ai-ibm.jpg", alt: "AI cert", issuer: "IBM", name: "Artificial Intelligence Fundamentals" },
-  { src: "images/cert-data-freecodecamp.jpg", alt: "Data cert", issuer: "FreeCodeCamp", name: "Data Analysis with Python" },
-  { src: "images/cert-ds-hp.jpg", alt: "DS cert", issuer: "HP LIFE Foundation", name: "Data Science & Analytics" },
-  { src: "images/cert-sql-sololearn.jpg", alt: "SQL cert", issuer: "SoloLearn", name: "SQL Intermediate" }
-];
+  // CERTIFICATES - FIXED: Images visible immediately
+  const certificates = [
+    { src: "images/cert-ml-freecodecamp.jpg", alt: "ML cert", issuer: "FreeCodeCamp", name: "Machine Learning with Python" },
+    { src: "images/cert-ai-ibm.jpg", alt: "AI cert", issuer: "IBM", name: "Artificial Intelligence Fundamentals" },
+    { src: "images/cert-data-freecodecamp.jpg", alt: "Data cert", issuer: "FreeCodeCamp", name: "Data Analysis with Python" },
+    { src: "images/cert-ds-hp.jpg", alt: "DS cert", issuer: "HP LIFE Foundation", name: "Data Science & Analytics" },
+    { src: "images/cert-sql-sololearn.jpg", alt: "SQL cert", issuer: "SoloLearn", name: "SQL Intermediate" }
+  ];
 
-const certGrid = document.getElementById('certGrid');
-const modal = document.getElementById('imageModal');
-const modalImg = document.getElementById('modalImg');
-const closeModal = document.querySelector('.close-modal');
+  const certGrid = document.getElementById('certGrid');
+  const modal = document.getElementById('imageModal');
+  const modalImg = document.getElementById('modalImg');
+  const closeModal = document.querySelector('.close-modal');
 
-certificates.forEach(cert => {
-  const card = document.createElement('div');
-  card.className = 'cert-card rev';
-  const imgWrap = document.createElement('div');
-  imgWrap.className = 'cert-img-wrap';
-  
-  const img = document.createElement('img');
-  img.src = cert.src;
-  img.alt = cert.alt;
-  img.className = 'cert-img';
-  
-  // Show image by default, hide fallback
-  img.style.display = 'block';
-  
-  const fallbackDiv = document.createElement('div');
-  fallbackDiv.className = 'cert-ph';
-  fallbackDiv.style.display = 'none'; // Hidden by default
-  fallbackDiv.innerHTML = `<svg width="34" height="34" fill="none" stroke="var(--accent)" stroke-width="1.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg><span>${cert.src.split('/').pop()}</span>`;
-  
-  // Only show fallback if image fails to load
-  img.onerror = function() {
-    this.style.display = 'none';
-    fallbackDiv.style.display = 'flex';
-  };
-  
-  imgWrap.appendChild(img);
-  imgWrap.appendChild(fallbackDiv);
-  
-  const bodyDiv = document.createElement('div');
-  bodyDiv.className = 'cert-body';
-  bodyDiv.innerHTML = `<p class="cert-issuer">${cert.issuer}</p><p class="cert-name">${cert.name}</p>`;
-  card.appendChild(imgWrap);
-  card.appendChild(bodyDiv);
-  
-  // Click to open modal with full image
-  card.addEventListener('click', (e) => {
-    e.stopPropagation();
-    modalImg.src = cert.src;
-    modal.style.display = 'flex';
-  });
-  
-  certGrid.appendChild(card);
-});
+  if (certGrid) {
+    certificates.forEach(cert => {
+      const card = document.createElement('div');
+      card.className = 'cert-card rev';
+      
+      const imgWrap = document.createElement('div');
+      imgWrap.className = 'cert-img-wrap';
+      
+      const img = document.createElement('img');
+      img.src = cert.src;
+      img.alt = cert.alt;
+      img.className = 'cert-img';
+      img.style.display = 'block';
+      img.style.width = '100%';
+      img.style.height = '100%';
+      img.style.objectFit = 'cover';
+      
+      const fallbackDiv = document.createElement('div');
+      fallbackDiv.className = 'cert-ph';
+      fallbackDiv.style.display = 'none';
+      fallbackDiv.innerHTML = `<svg width="42" height="42" fill="none" stroke="var(--accent)" stroke-width="1.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg><span>${cert.name.substring(0, 30)}${cert.name.length > 30 ? '...' : ''}</span>`;
+      
+      img.onerror = function() {
+        img.style.display = 'none';
+        fallbackDiv.style.display = 'flex';
+      };
+      
+      imgWrap.appendChild(img);
+      imgWrap.appendChild(fallbackDiv);
+      
+      const bodyDiv = document.createElement('div');
+      bodyDiv.className = 'cert-body';
+      bodyDiv.innerHTML = `<p class="cert-issuer">${cert.issuer}</p><p class="cert-name">${cert.name}</p>`;
+      
+      card.appendChild(imgWrap);
+      card.appendChild(bodyDiv);
+      
+      // Click to open modal with full image
+      card.addEventListener('click', (e) => {
+        e.stopPropagation();
+        modalImg.src = cert.src;
+        modal.style.display = 'flex';
+      });
+      
+      certGrid.appendChild(card);
+    });
+  }
 
-// Modal close handlers
-closeModal.onclick = () => modal.style.display = 'none';
-modal.onclick = (e) => { if(e.target === modal) modal.style.display = 'none'; };
+  // Modal close handlers
+  if (closeModal) {
+    closeModal.onclick = () => modal.style.display = 'none';
+  }
+  if (modal) {
+    modal.onclick = (e) => { if(e.target === modal) modal.style.display = 'none'; };
+  }
 </script>
 </body>
-</htm>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 </html>
+  </html>
