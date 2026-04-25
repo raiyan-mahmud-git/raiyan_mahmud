@@ -344,58 +344,67 @@
   // Project card spotlight
   document.querySelectorAll('.project-card').forEach(card => card.addEventListener('mousemove', function(e) { let r = this.getBoundingClientRect(); this.style.setProperty('--mx', ((e.clientX - r.left)/r.width*100).toFixed(1)+'%'); this.style.setProperty('--my', ((e.clientY - r.top)/r.height*100).toFixed(1)+'%'); }));
 
-  // Certificate data: image path, issuer, name
-  const certificates = [
-    { src: "images/cert-ml-freecodecamp.jpg", alt: "ML cert", issuer: "FreeCodeCamp", name: "Machine Learning with Python" },
-    { src: "images/cert-ai-ibm.jpg", alt: "AI cert", issuer: "IBM", name: "Artificial Intelligence Fundamentals" },
-    { src: "images/cert-data-freecodecamp.jpg", alt: "Data cert", issuer: "FreeCodeCamp", name: "Data Analysis with Python" },
-    { src: "images/cert-ds-hp.jpg", alt: "DS cert", issuer: "HP LIFE Foundation", name: "Data Science & Analytics" },
-    { src: "images/cert-sql-sololearn.jpg", alt: "SQL cert", issuer: "SoloLearn", name: "SQL Intermediate" }
-  ];
+// Certificate data: image path, issuer, name
+const certificates = [
+  { src: "images/cert-ml-freecodecamp.jpg", alt: "ML cert", issuer: "FreeCodeCamp", name: "Machine Learning with Python" },
+  { src: "images/cert-ai-ibm.jpg", alt: "AI cert", issuer: "IBM", name: "Artificial Intelligence Fundamentals" },
+  { src: "images/cert-data-freecodecamp.jpg", alt: "Data cert", issuer: "FreeCodeCamp", name: "Data Analysis with Python" },
+  { src: "images/cert-ds-hp.jpg", alt: "DS cert", issuer: "HP LIFE Foundation", name: "Data Science & Analytics" },
+  { src: "images/cert-sql-sololearn.jpg", alt: "SQL cert", issuer: "SoloLearn", name: "SQL Intermediate" }
+];
 
-  const certGrid = document.getElementById('certGrid');
-  const modal = document.getElementById('imageModal');
-  const modalImg = document.getElementById('modalImg');
-  const closeModal = document.querySelector('.close-modal');
+const certGrid = document.getElementById('certGrid');
+const modal = document.getElementById('imageModal');
+const modalImg = document.getElementById('modalImg');
+const closeModal = document.querySelector('.close-modal');
 
-  certificates.forEach(cert => {
-    const card = document.createElement('div');
-    card.className = 'cert-card rev';
-    const imgWrap = document.createElement('div');
-    imgWrap.className = 'cert-img-wrap';
-    const img = document.createElement('img');
-    img.src = cert.src;
-    img.alt = cert.alt;
-    img.className = 'cert-img';
-    img.onerror = function() { this.style.display='none'; this.nextElementSibling.style.display='flex'; };
-    const fallbackDiv = document.createElement('div');
-    fallbackDiv.className = 'cert-ph';
-    fallbackDiv.style.display = 'none';
-    fallbackDiv.innerHTML = `<svg width="34" height="34" fill="none" stroke="var(--accent)" stroke-width="1.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg><span>${cert.src.split('/').pop()}</span>`;
-    imgWrap.appendChild(img);
-    imgWrap.appendChild(fallbackDiv);
-    const bodyDiv = document.createElement('div');
-    bodyDiv.className = 'cert-body';
-    bodyDiv.innerHTML = `<p class="cert-issuer">${cert.issuer}</p><p class="cert-name">${cert.name}</p>`;
-    card.appendChild(imgWrap);
-    card.appendChild(bodyDiv);
-    
-    card.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (img.complete && img.naturalHeight !== 0) {
-        modalImg.src = cert.src;
-      } else {
-        // fallback
-        modalImg.src = cert.src;
-      }
-      modal.style.display = 'flex';
-    });
-    certGrid.appendChild(card);
+certificates.forEach(cert => {
+  const card = document.createElement('div');
+  card.className = 'cert-card rev';
+  const imgWrap = document.createElement('div');
+  imgWrap.className = 'cert-img-wrap';
+  
+  const img = document.createElement('img');
+  img.src = cert.src;
+  img.alt = cert.alt;
+  img.className = 'cert-img';
+  
+  // Show image by default, hide fallback
+  img.style.display = 'block';
+  
+  const fallbackDiv = document.createElement('div');
+  fallbackDiv.className = 'cert-ph';
+  fallbackDiv.style.display = 'none'; // Hidden by default
+  fallbackDiv.innerHTML = `<svg width="34" height="34" fill="none" stroke="var(--accent)" stroke-width="1.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg><span>${cert.src.split('/').pop()}</span>`;
+  
+  // Only show fallback if image fails to load
+  img.onerror = function() {
+    this.style.display = 'none';
+    fallbackDiv.style.display = 'flex';
+  };
+  
+  imgWrap.appendChild(img);
+  imgWrap.appendChild(fallbackDiv);
+  
+  const bodyDiv = document.createElement('div');
+  bodyDiv.className = 'cert-body';
+  bodyDiv.innerHTML = `<p class="cert-issuer">${cert.issuer}</p><p class="cert-name">${cert.name}</p>`;
+  card.appendChild(imgWrap);
+  card.appendChild(bodyDiv);
+  
+  // Click to open modal with full image
+  card.addEventListener('click', (e) => {
+    e.stopPropagation();
+    modalImg.src = cert.src;
+    modal.style.display = 'flex';
   });
+  
+  certGrid.appendChild(card);
+});
 
-  // Modal close handlers
-  closeModal.onclick = () => modal.style.display = 'none';
-  modal.onclick = (e) => { if(e.target === modal) modal.style.display = 'none'; };
+// Modal close handlers
+closeModal.onclick = () => modal.style.display = 'none';
+modal.onclick = (e) => { if(e.target === modal) modal.style.display = 'none'; };
 </script>
 </body>
 </htm>
