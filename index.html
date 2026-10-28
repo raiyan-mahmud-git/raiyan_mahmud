@@ -13,7 +13,7 @@
 <meta name="theme-color" content="#f1f5ee" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0a1814" media="(prefers-color-scheme: dark)">
 <script>
-/* Runs before first paint: apply a saved theme override and mark that JS is available. */
+
 document.documentElement.classList.add('js');
 try{var s=localStorage.getItem('color-scheme');if(s==='light'||s==='dark'){document.querySelector('meta[name="color-scheme"]').content=s}}catch(e){}
 </script>
@@ -22,10 +22,7 @@ try{var s=localStorage.getItem('color-scheme');if(s==='light'||s==='dark'){docum
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap">
 <style>
-/* ------------------------------------------------------------------
-   Tokens. Light values first, then light-dark() where supported.
-   The flag green and the red disc are the page's colour story.
-------------------------------------------------------------------- */
+
 :root{
   color-scheme:light dark;
   --paper:#f1f5ee; --paper-2:#e4ece2; --ink:#10211a; --ink-soft:#44564d;
@@ -82,7 +79,7 @@ p{text-wrap:pretty}
 .skip{position:absolute;left:var(--gutter);top:-4rem;z-index:100;padding:.7rem 1.1rem;background:var(--ink);color:var(--paper);font-weight:600;border-radius:var(--radius);text-decoration:none}
 .skip:focus{top:.75rem}
 
-/* ---------- buttons ---------- */
+/* buttons */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;min-height:2.75rem;padding:.6rem 1.35rem;font:600 1rem/1.2 var(--body);text-decoration:none;color:var(--ink);background:transparent;border:1.5px solid currentColor;border-radius:99px;cursor:pointer;transition:transform .2s,background-color .2s,color .2s}
 .btn:hover{transform:translateY(-2px)}
 .btn-solid{background:var(--ink);color:var(--paper);border-color:var(--ink)}
@@ -91,7 +88,7 @@ p{text-wrap:pretty}
 .btn-link{min-height:2.75rem;display:inline-flex;align-items:center;font-weight:600;color:var(--green)}
 .btn-link:hover{color:var(--red)}
 
-/* ---------- navigation ---------- */
+/* navigation */
 .progress{position:fixed;inset:0 0 auto 0;height:3px;background:var(--disc);transform:scaleX(0);transform-origin:0 50%;z-index:70;pointer-events:none}
 @supports (animation-timeline:scroll()){
   .progress{animation:grow-x linear both;animation-timeline:scroll(root)}
@@ -118,7 +115,7 @@ p{text-wrap:pretty}
   .js .nav-links.open{display:flex}
   .js .nav-links a{border-top:1px solid var(--line)}
 }
-/* Theme toggle: show only the action that applies to the scheme currently rendered. */
+/* Theme toggle */
 .t-to-light{display:none}
 @media (prefers-color-scheme:dark){.t-to-dark{display:none}.t-to-light{display:inline}}
 :root:has(> head > meta[name="color-scheme"][content="dark"]) .t-to-dark{display:none}
@@ -127,7 +124,7 @@ p{text-wrap:pretty}
 :root:has(> head > meta[name="color-scheme"][content="light"]) .t-to-light{display:none}
 @media (scripting:none){.theme-btn{display:none}}
 
-/* ---------- hero ---------- */
+/* hero */
 .hero{overflow-x:clip;padding-block:clamp(2.5rem,6vw,5rem) clamp(3.5rem,7vw,6rem)}
 .hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(2rem,5vw,4.5rem);align-items:center}
 .hero h1{font-size:clamp(3.5rem,10.5vw,8rem);line-height:.96;letter-spacing:-.045em}
@@ -171,7 +168,7 @@ p{text-wrap:pretty}
   @keyframes fade-in{from{opacity:0}}
 }
 
-/* ---------- sections ---------- */
+/* sections */
 .sec{overflow-x:clip;padding-block:clamp(4rem,9vw,7rem);border-top:1px solid var(--line)}
 .sec-grid{display:grid;grid-template-columns:minmax(0,17rem) minmax(0,1fr);gap:clamp(1.5rem,4vw,4.5rem)}
 .sec-head{position:sticky;top:5.5rem;align-self:start}
@@ -184,7 +181,7 @@ p{text-wrap:pretty}
 .sub{margin-top:clamp(2.5rem,5vw,4rem);scroll-margin-top:6rem}
 .sub>h3{margin-bottom:1.25rem}
 
-/* ---------- projects ---------- */
+/* projects */
 .proj-head{display:grid;grid-template-columns:minmax(0,17rem) minmax(0,1fr);gap:clamp(1.5rem,4vw,4.5rem);align-items:end;margin-bottom:clamp(2rem,4vw,3rem)}
 .proj-head p{max-width:34rem;color:var(--ink-soft);font-size:1.125rem}
 @media (max-width:53.75rem){.proj-head{grid-template-columns:1fr}}
@@ -203,7 +200,7 @@ p{text-wrap:pretty}
 .links{display:flex;flex-wrap:wrap;align-items:center;gap:.25rem 1.5rem;margin-top:1.5rem}
 .feature .links .btn{margin-right:.25rem}
 
-/* pipeline diagram: an ordered list, because the steps are a sequence */
+/* pipeline diagram */
 .flow{counter-reset:none}
 .flow li{position:relative;padding:0 0 1.35rem 2.4rem}
 .flow li:last-child{padding-bottom:0}
@@ -244,7 +241,7 @@ p{text-wrap:pretty}
   }
 }
 
-/* ---------- about ---------- */
+/* about */
 .portrait{position:relative;width:min(11.5rem,46vw);aspect-ratio:1;margin-top:1.5rem;border-radius:50%;background:var(--disc);color:#fff;display:grid;place-items:center;font:500 2.6rem/1 var(--display);letter-spacing:-.03em;overflow:hidden;border:3px solid var(--paper);box-shadow:0 0 0 2px var(--disc)}
 .portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .toolkit{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem 2.5rem}
@@ -257,7 +254,7 @@ p{text-wrap:pretty}
 .langs dd{margin-top:.2rem;color:var(--ink-soft);font-size:.95rem}
 @media (max-width:36rem){.langs{grid-template-columns:1fr}}
 
-/* ---------- education ---------- */
+/* education */
 .timeline>li{display:grid;grid-template-columns:minmax(0,9.5rem) minmax(0,1fr);gap:.25rem 2rem;padding-block:1.5rem;border-top:1px solid var(--line)}
 .timeline>li:first-child{border-top:0;padding-top:0}
 .timeline time{font-weight:600;color:var(--green)}
@@ -274,7 +271,7 @@ p{text-wrap:pretty}
 .courses strong{display:block;font:500 1.35rem/1.25 var(--display)}
 .courses span{color:var(--ink-soft)}
 
-/* ---------- certifications ---------- */
+/* certifications */
 .certs>li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.5rem 1.25rem;align-items:center;padding-block:1.1rem;border-top:1px solid var(--line)}
 .certs>li:last-child{border-bottom:1px solid var(--line)}
 .thumb{display:block;padding:0;border:2px solid var(--line);border-radius:4px;background:var(--paper-2);cursor:zoom-in;overflow:hidden;line-height:0;transition:border-color .2s,transform .2s}
@@ -291,7 +288,7 @@ p{text-wrap:pretty}
   .noimg .btn-link{grid-column:1}
 }
 
-/* ---------- certificate dialog ---------- */
+/* certificate dialog */
 .dlg{border:0;padding:0;background:transparent;color:var(--ink);width:min(94vw,64rem);max-width:none;max-height:94dvh;overflow:visible;margin:auto}
 .dlg::backdrop{background:rgba(5,16,11,.82);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
 .dlg-panel{display:grid;gap:.9rem;padding:1rem 1rem 1.1rem;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);max-height:94dvh;overflow:auto}
@@ -308,7 +305,7 @@ p{text-wrap:pretty}
 }
 
 
-/* ---------- background layer ---------- */
+/* background layer */
 .bg{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
 .bg::before{content:"";position:absolute;inset:0;background:
   radial-gradient(44rem 34rem at 92% 3%,var(--glow-a),transparent 70%),
@@ -316,7 +313,7 @@ p{text-wrap:pretty}
   radial-gradient(40rem 30rem at 60% 106%,var(--glow-c),transparent 70%)}
 .bg::after{content:"";position:absolute;inset:0;background-image:radial-gradient(circle,var(--dots) 1.1px,transparent 1.7px);background-size:30px 30px;opacity:.5;-webkit-mask-image:radial-gradient(ellipse 80% 64% at 76% 10%,#000 8%,transparent 74%);mask-image:radial-gradient(ellipse 80% 64% at 76% 10%,#000 8%,transparent 74%)}
 
-/* ---------- glass panels (over the background and the red disc) ---------- */
+/* glass panels (over the background and the red disc) */
 .knn,.feature-fig{background:var(--glass);border:1px solid var(--glass-edge);border-radius:var(--radius-lg);box-shadow:var(--glass-shadow),inset 0 1px 0 var(--glass-edge),0 0 0 1px var(--glass-line);-webkit-backdrop-filter:blur(18px) saturate(1.5);backdrop-filter:blur(18px) saturate(1.5)}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
   .knn,.feature-fig{background:var(--paper-2)}
@@ -359,7 +356,7 @@ p{text-wrap:pretty}
 .gh-all{margin-top:clamp(2.5rem,5vw,4rem);padding-top:1.5rem;border-top:1px solid var(--line)}
 .note-priv{font-size:.95rem;color:var(--ink-soft);border-inline-start:3px solid var(--line);padding-inline-start:.85rem}
 
-/* ---------- contact ---------- */
+/* contact */
 .contact{position:relative;background:var(--band);color:var(--band-ink);border-top:0;--focus:#ff9aa3;--line:var(--band-line)}
 .contact::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.07;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 .contact{overflow:hidden}
@@ -815,11 +812,11 @@ var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){retu
 var EMAIL='raiyanmahmud484@gmail.com';
 var reduce=matchMedia('(prefers-reduced-motion: reduce)');
 
-/* ---- toast (polite live region) ---- */
+/* toast */
 var toast=$('#toast'),toastT;
 function say(msg){toast.textContent=msg;toast.classList.add('show');clearTimeout(toastT);toastT=setTimeout(function(){toast.classList.remove('show')},2600)}
 
-/* ---- theme: system by default, one explicit override, stored only when it differs from the system ---- */
+/* theme */
 var meta=$('meta[name="color-scheme"]'),dark=matchMedia('(prefers-color-scheme: dark)');
 var themeMetas=$$('meta[name="theme-color"]'),themeBase=themeMetas.map(function(m){return m.content});
 function rendered(){return meta.content==='dark'||meta.content==='light'?meta.content:(dark.matches?'dark':'light')}
@@ -838,7 +835,7 @@ addEventListener('storage',function(e){
 });
 syncThemeColor();
 
-/* ---- mobile menu: a disclosure; without JS the links simply wrap under the logo ---- */
+/* mobile menu */
 var menuBtn=$('#menuBtn'),links=$('#navLinks');
 function setMenu(open,returnFocus){
   links.classList.toggle('open',open);menuBtn.setAttribute('aria-expanded',String(open));
@@ -854,14 +851,14 @@ document.addEventListener('click',function(e){
 });
 matchMedia('(min-width: 48rem)').addEventListener('change',function(e){if(e.matches)setMenu(false)});
 
-/* ---- scroll progress (native scroll-driven animation where available) ---- */
+/* scroll progress */
 if(!(window.CSS&&CSS.supports('animation-timeline: scroll()'))){
   var bar=$('#progress'),tick=false;
   var upd=function(){tick=false;var h=document.documentElement.scrollHeight-innerHeight;bar.style.transform='scaleX('+(h>0?Math.min(1,Math.max(0,scrollY/h)):0)+')'};
   addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(upd)}},{passive:true});upd();
 }
 
-/* ---- active section ---- */
+/* active section */
 var navA=$$('#navLinks a');
 if('IntersectionObserver' in window){
   var spy=new IntersectionObserver(function(es){
@@ -876,7 +873,7 @@ if('IntersectionObserver' in window){
   heroObs.observe($('#top'));
 }
 
-/* ---- hero figure: 5-nearest-neighbour vote that follows the pointer ---- */
+/* -hero figure */
 var fig=$('[data-knn]');
 if(fig){
   var svg=$('svg',fig),sample=$('.sample',fig),lk=$$('.link',fig),out=$('[data-out]',fig);
@@ -901,7 +898,7 @@ if(fig){
   svg.addEventListener('pointerdown',at);
 }
 
-/* ---- certificate preview: native modal dialog ---- */
+/* certificate preview */
 var dlg=$('#certDialog'),dImg=$('#dlgImg'),dTitle=$('#dlgTitle'),dVerify=$('#dlgVerify'),opener=null;
 $$('.thumb').forEach(function(btn){
   btn.addEventListener('click',function(){
@@ -916,18 +913,18 @@ $$('.thumb').forEach(function(btn){
   });
 });
 $('#dlgClose').addEventListener('click',function(){dlg.close()});
-/* Click on the dim backdrop closes; click on the certificate image does not, so it can be inspected. */
+
 dlg.addEventListener('click',function(e){if(e.target===dlg)dlg.close()});
 dlg.addEventListener('close',function(){if(opener){opener.focus();opener=null}});
 
-/* ---- copy email ---- */
+/* copy email */
 $('#copyBtn').addEventListener('click',function(){
   var done=function(ok){say(ok?'Email address copied':'Copy failed. Select the address above and copy it.')};
   if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(EMAIL).then(function(){done(true)},function(){done(false)})}
   else done(false);
 });
 
-/* ---- contact form: same FormSubmit endpoint as the form's action ---- */
+/* contact form */
 var form=$('#askForm'),errBox=$('#askError'),okBox=$('#askOk'),btn=$('#askBtn');
 function fieldErr(input,msg){
   var e=$('#'+input.id+'-err');if(e)e.textContent=msg||'';
@@ -963,8 +960,7 @@ form.addEventListener('submit',function(e){
       else{if(res.j&&res.j.message)console.warn('FormSubmit:',res.j.message);fail('Your message was not sent.',m.value)}
     })
     .catch(function(err){
-      /* The request left the page but no readable answer came back (timeout, blocked reply, dropped connection).
-         The message may still have been delivered, so do not claim it was not sent. */
+      
       console.error('Contact form: no readable reply from FormSubmit.',err);
       fail('The page could not confirm that your message was sent. It may still have arrived.',m.value);
     })
