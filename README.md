@@ -2,7 +2,7 @@
 
 My personal portfolio: machine-learning, NLP and data projects built in Python, plus a few web projects. It is a single static page with no build step and no framework.
 
-**Live site:** https://raiyan-mahmud-git.github.io/portfolio/
+**Live site:** https://raiyan-mahmud-git.github.io/raiyan_mahmud/
 
 ## What is on the page
 
@@ -39,15 +39,10 @@ Put these files in an `images/` folder next to `index.html`. The page hides any 
 | File | Used for |
 | --- | --- |
 | `profile.jpg` | Portrait in the About section |
-| `flo-screenshot.jpg` | Screenshot of Flo |
 | `cert-ml-freecodecamp.jpg` | Machine Learning with Python certificate |
 | `cert-data-freecodecamp.jpg` | Data Analysis with Python certificate |
 | `cert-ai-ibm.jpg` | IBM AI Fundamentals certificate |
-<<<<<<< HEAD
 | `cert-mcp-anthropic.jpg` | Anthropic Introduction to Model Context Protocol certificate |
-=======
-| `cert-ai-fluency-anthropic.jpg` | Anthropic AI Fluency certificate |
->>>>>>> 709a52784e4329d72411dc10fa1417196f76b4f3
 | `cert-sql-sololearn.jpg` | SoloLearn SQL Intermediate certificate |
 
 ## Deploy to GitHub Pages
