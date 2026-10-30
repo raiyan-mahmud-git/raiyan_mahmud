@@ -6,7 +6,7 @@ My personal portfolio: machine-learning, NLP and data projects built in Python, 
 
 ## What is on the page
 
-- **Projects.** Six selected projects chosen to show different skills, each with a diagram of how it works and links to the code. The chess engine, Flo, the SMS spam classifier and the Sea Level Predictor also have live demos.
+- **Projects.** Six selected projects chosen to show different skills, each with a diagram of how it works and links to the code. Five of them (the chess engine, Flo, the SMS spam classifier, the Sea Level Predictor and the Book Price Scraper) also have live demos.
 - **About, skills and languages.**
 - **Education and courses.**
 - **Certifications.** Each certificate opens in an accessible dialog with a link to verify it.
