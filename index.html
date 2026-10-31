@@ -13,7 +13,7 @@
 <meta name="theme-color" content="#f1f5ee" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0a1814" media="(prefers-color-scheme: dark)">
 <script>
-/* Runs before first paint: apply a saved theme override and mark that JS is available. */
+
 document.documentElement.classList.add('js');
 try{var s=localStorage.getItem('color-scheme');if(s==='light'||s==='dark'){document.querySelector('meta[name="color-scheme"]').content=s}}catch(e){}
 </script>
@@ -22,10 +22,7 @@ try{var s=localStorage.getItem('color-scheme');if(s==='light'||s==='dark'){docum
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap">
 <style>
-/* ------------------------------------------------------------------
-   Tokens. Light values first, then light-dark() where supported.
-   The flag green and the red disc are the page's colour story.
-------------------------------------------------------------------- */
+
 :root{
   color-scheme:light dark;
   --paper:#f1f5ee; --paper-2:#e4ece2; --ink:#10211a; --ink-soft:#44564d;
@@ -82,7 +79,7 @@ p{text-wrap:pretty}
 .skip{position:absolute;left:var(--gutter);top:-4rem;z-index:100;padding:.7rem 1.1rem;background:var(--ink);color:var(--paper);font-weight:600;border-radius:var(--radius);text-decoration:none}
 .skip:focus{top:.75rem}
 
-/* ---------- buttons ---------- */
+/* buttons */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;min-height:2.75rem;padding:.6rem 1.35rem;font:600 1rem/1.2 var(--body);text-decoration:none;color:var(--ink);background:transparent;border:1.5px solid currentColor;border-radius:99px;cursor:pointer;transition:transform .2s,background-color .2s,color .2s}
 .btn:hover{transform:translateY(-2px)}
 .btn-solid{background:var(--ink);color:var(--paper);border-color:var(--ink)}
@@ -91,7 +88,7 @@ p{text-wrap:pretty}
 .btn-link{min-height:2.75rem;display:inline-flex;align-items:center;font-weight:600;color:var(--green)}
 .btn-link:hover{color:var(--red)}
 
-/* ---------- navigation ---------- */
+/* navigation */
 .progress{position:fixed;inset:0 0 auto 0;height:3px;background:var(--disc);transform:scaleX(0);transform-origin:0 50%;z-index:70;pointer-events:none}
 @supports (animation-timeline:scroll()){
   .progress{animation:grow-x linear both;animation-timeline:scroll(root)}
@@ -118,7 +115,7 @@ p{text-wrap:pretty}
   .js .nav-links.open{display:flex}
   .js .nav-links a{border-top:1px solid var(--line)}
 }
-/* Theme toggle: show only the action that applies to the scheme currently rendered. */
+/* Theme toggle */
 .t-to-light{display:none}
 @media (prefers-color-scheme:dark){.t-to-dark{display:none}.t-to-light{display:inline}}
 :root:has(> head > meta[name="color-scheme"][content="dark"]) .t-to-dark{display:none}
