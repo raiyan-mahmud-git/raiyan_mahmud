@@ -487,7 +487,7 @@ footer a{color:#fff}
     <div class="wrap">
       <div class="proj-head">
         <h2 id="projects-title">Projects</h2>
-        <p>Six projects that show different skills. Five have live demos; the Cats &amp; Dogs classifier links to its code.</p>
+        <p>Six projects that show different skills. Each one has a live demo and links to its code.</p>
       </div>
 
       <article class="feature" aria-labelledby="chess-t">
@@ -621,11 +621,11 @@ footer a{color:#fff}
       <div class="more">
         <article class="more-item" aria-labelledby="cd-t">
           <h3 id="cd-t">Cats &amp; Dogs Image Classifier</h3>
-          <p class="stack">Python, TensorFlow, Keras, CNN</p>
-          <p>A convolutional neural network that classifies images of cats and dogs. Data augmentation (rotation, shifting, zoom and flips) brings it to around 74% accuracy on test data.</p>
-          <ol class="chain" aria-label="Pipeline"><li>Cat and dog photos</li><li>Augmentation</li><li>CNN</li><li>About 74% test accuracy</li></ol>
-          <p class="takeaway"><b>Takeaway.</b> Using data augmentation to help an image model generalize.</p>
-          <div class="links"><a class="btn-link" href="https://github.com/raiyan-mahmud-git/Cats-and-dogs-image-classifier" target="_blank" rel="noopener">Source code<span class="sr"> for Cats and Dogs Image Classifier (opens in a new tab)</span></a></div>
+          <p class="stack">Python, TensorFlow, Keras, Streamlit, FastAPI</p>
+          <p>A 74% baseline CNN rebuilt with MobileNetV2 transfer learning, reaching 98.0% on the official 50-image test set. Grad-CAM shows what the model looks at, and a Streamlit app and FastAPI service run it, backed by 42 automated tests.</p>
+          <ol class="chain" aria-label="Pipeline"><li>Baseline CNN, 74%</li><li>MobileNetV2, 98%</li><li>Grad-CAM</li><li>Streamlit and FastAPI</li></ol>
+          <p class="note-priv">98.0% is 49 of 50 test images, a small sample.</p>
+          <div class="links"><a class="btn-link" href="https://cats-and-dogs-image-classifier.streamlit.app/" target="_blank" rel="noopener">Live app<span class="sr">: Cats and Dogs Image Classifier (opens in a new tab)</span></a><a class="btn-link" href="https://github.com/raiyan-mahmud-git/Cats-and-dogs-image-classifier" target="_blank" rel="noopener">Source code<span class="sr"> for Cats and Dogs Image Classifier (opens in a new tab)</span></a></div>
         </article>
 
         <article class="more-item" aria-labelledby="bs-t">
