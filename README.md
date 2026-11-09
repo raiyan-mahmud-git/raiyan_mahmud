@@ -6,7 +6,7 @@ My personal portfolio: machine-learning, NLP and data projects built in Python, 
 
 ## What is on the page
 
-- **Projects.** Six selected projects chosen to show different skills, each with a diagram of how it works and links to the code. Each one also has a live demo.
+- **Projects.** Six selected projects chosen to show different skills, each with a diagram of how it works and links to the code. Each has a live link. Two of them (the SMS classifier and the Cats & Dogs classifier) grew out of freeCodeCamp challenges and are labelled as such.
 - **About, skills and languages.**
 - **Education and courses.**
 - **Certifications.** Each certificate opens in an accessible dialog with a link to verify it.
