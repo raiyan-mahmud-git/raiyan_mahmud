@@ -489,7 +489,7 @@ footer a{color:#fff}
     <div class="wrap">
       <div class="proj-head">
         <h2 id="projects-title">Projects</h2>
-        <p>Six projects that show different skills. Each has a live link and its code on GitHub. Two of them grew out of freeCodeCamp challenges and are labelled.</p>
+        <p>Six projects that show different skills. Each has a live link and its code on GitHub. One grew out of a freeCodeCamp challenge and one from a well-known tutorial; both are labelled.</p>
       </div>
 
       <article class="feature" aria-labelledby="chess-t">
@@ -576,40 +576,25 @@ footer a{color:#fff}
         </figure>
       </article>
 
-      <article class="feature" aria-labelledby="sms-t">
+      <article class="feature" aria-labelledby="dl-t">
         <div>
-          <h3 id="sms-t">SMS spam classifier, two ways</h3>
-          <p class="origin">Neural network version extended from a freeCodeCamp challenge</p>
-          <p class="stack">Python, scikit-learn, TensorFlow, Keras, FastAPI, Streamlit</p>
-          <p>The same problem solved twice. A TF-IDF and Naive Bayes model with cross-validated tuning scores 98.6% accuracy on a held-out test set of 1,115 messages. A Bidirectional LSTM built with TensorFlow and Keras scores 98.84% accuracy and 0.955 F1 on the spam class, on an internal holdout of 774 messages. It is served through a Streamlit demo and an API-key-protected FastAPI endpoint.</p>
-          <p class="note-priv">These are development results on two different splits, not a head-to-head comparison or an independent real-world evaluation.</p>
+          <h3 id="dl-t">TinyDL, deep learning from scratch</h3>
+          <p class="origin">Inspired by Andrej Karpathy's micrograd</p>
+          <p class="stack">Python, NumPy, JavaScript</p>
+          <p>A small neural-network library with reverse-mode automatic differentiation, written with NumPy as its only dependency and no deep-learning framework. It has vectorised tensors with broadcasting, and it trains a 784-128-64-10 network with Adam on MNIST, which reaches 97.34% ± 0.23 test accuracy (mean ± standard deviation over 5 seeds, 10,000 test images). Gradient checks and optional PyTorch comparison tests check its correctness. Experiment scripts compare optimizers, dropout and initialization.</p>
+          <p class="note-priv">The browser demo runs a separate checkpoint trained with augmentation, which has no reported test score, and hand-drawn digits differ from MNIST. Treat the demo as an illustration, not a benchmark.</p>
           <div class="links">
-            <a class="btn btn-solid" href="https://sms-text-classifier.streamlit.app/" target="_blank" rel="noopener">Try the live demo<span class="sr"> of the neural network classifier (opens in a new tab)</span></a>
-            <a class="btn-link" href="https://github.com/raiyan-mahmud-git/Neural-Network-SMS-Text-Classifier" target="_blank" rel="noopener">Neural network source<span class="sr"> on GitHub (opens in a new tab)</span></a>
-            <a class="btn-link" href="https://github.com/raiyan-mahmud-git/spam-classifier" target="_blank" rel="noopener">TF-IDF source<span class="sr"> on GitHub (opens in a new tab)</span></a>
+            <a class="btn btn-solid" href="https://raiyan-mahmud-git.github.io/autodiff-from-scratch/" target="_blank" rel="noopener">Draw a digit live<span class="sr"> in the TinyDL demo (opens in a new tab)</span></a>
+            <a class="btn-link" href="https://github.com/raiyan-mahmud-git/autodiff-from-scratch" target="_blank" rel="noopener">Source code<span class="sr"> for TinyDL (opens in a new tab)</span></a>
           </div>
         </div>
         <figure class="feature-fig">
-          <p class="fork-src"><b>SMS text</b></p>
-          <svg class="fork-top" viewBox="0 0 100 20" preserveAspectRatio="none" aria-hidden="true"><path d="M50 0V8M50 8H25V20M50 8H75V20" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke"/></svg>
-          <div class="fork">
-            <div>
-              <h4>Classical</h4>
-              <ol class="flow" aria-label="Classical pipeline">
-                <li><b>TF-IDF features</b><span>Words weighted by how telling they are</span></li>
-                <li><b>Naive Bayes</b><span>Cross-validated tuning</span></li>
-                <li><b>98.6% accuracy</b><span>Test set, 1,115 messages</span></li>
-              </ol>
-            </div>
-            <div>
-              <h4>Neural network</h4>
-              <ol class="flow" aria-label="Neural network pipeline">
-                <li><b>Bidirectional LSTM</b><span>TensorFlow and Keras</span></li>
-                <li><b>98.84% accuracy</b><span>Internal holdout, 774 messages</span></li>
-                <li><b>Streamlit and FastAPI</b><span>Live demo and API-key endpoint</span></li>
-              </ol>
-            </div>
-          </div>
+          <ol class="flow" aria-label="How TinyDL is built and checked">
+            <li><b>Tensors and autodiff</b><span>Vectorised, with broadcasting</span></li>
+            <li><b>Checked</b><span>Gradient checks and PyTorch comparison</span></li>
+            <li><b>Trained on MNIST</b><span>MLP with Adam, 5 seeds</span></li>
+            <li><b>97.34% accuracy</b><span>Test set, 10,000 images</span></li>
+          </ol>
         </figure>
       </article>
 
