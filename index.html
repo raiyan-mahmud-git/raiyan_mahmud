@@ -860,31 +860,9 @@ if('IntersectionObserver' in window){
   heroObs.observe($('#top'));
 }
 
-/* hero figure */
-var fig=$('[data-knn]');
-if(fig){
-  var svg=$('svg',fig),sample=$('.sample',fig),lk=$$('.link',fig),out=$('[data-out]',fig);
-  var pts=$$('.pt',fig).map(function(el){return{el:el,x:+el.getAttribute('cx'),y:+el.getAttribute('cy'),k:el.getAttribute('data-k')}});
-  var names={a:'not spam',b:'spam'},raf=0,next=null;
-  function place(x,y){
-    x=Math.max(60,Math.min(530,x));y=Math.max(34,Math.min(386,y));
-    var d=pts.map(function(p){return{p:p,d:(p.x-x)*(p.x-x)+(p.y-y)*(p.y-y)}}).sort(function(a,b){return a.d-b.d}).slice(0,5);
-    pts.forEach(function(p){p.el.classList.remove('nn')});
-    var a=0;
-    d.forEach(function(o,i){o.p.el.classList.add('nn');if(o.p.k==='a')a++;
-      var l=lk[i];l.setAttribute('x1',x);l.setAttribute('y1',y);l.setAttribute('x2',o.p.x);l.setAttribute('y2',o.p.y)});
-    sample.setAttribute('transform','translate('+x+' '+y+')');
-    var win=a>2?'a':'b';
-    out.textContent='5 nearest messages: '+a+' not spam, '+(5-a)+' spam. The red sample is classified as '+names[win]+'.';
-  }
-  function at(e){
-    var r=svg.getBoundingClientRect();next=[(e.clientX-r.left)*560/r.width,(e.clientY-r.top)*440/r.height];
-    if(!raf)raf=requestAnimationFrame(function(){raf=0;place(next[0],next[1])});
-  }
-  svg.addEventListener('pointermove',function(e){if(e.pointerType!=='touch')at(e)});
-  svg.addEventListener('pointerdown',at);
-}
 
+
+  
 /* certificate preview */
 var dlg=$('#certDialog'),dImg=$('#dlgImg'),dTitle=$('#dlgTitle'),dVerify=$('#dlgVerify'),opener=null;
 $$('.thumb').forEach(function(btn){
