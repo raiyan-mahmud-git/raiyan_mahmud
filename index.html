@@ -501,98 +501,7 @@ footer{background:var(--paper)}
         </figure>
       </article>
 
-  <section class="sec" id="projects" aria-labelledby="projects-title">
-    <div class="wrap">
-      <div class="proj-head">
-        <h2 id="projects-title">Projects</h2>
-        <p>Six projects. Each has a live link and its code on GitHub. One grew out of a freeCodeCamp challenge and one from a well-known tutorial.</p>
-      </div>
-
-      <article class="feature" aria-labelledby="chess-t">
-        <div>
-          <h3 id="chess-t">Chess engine in the browser</h3>
-          <p class="stack">JavaScript, Web Workers, FEN and PGN</p>
-          <p>A complete chess engine, interactive board and analysis suite with zero dependencies, running entirely in the browser. It is built on a 0x88 board representation, tapered evaluation and alpha-beta negamax search, and reads and writes FEN and PGN.</p>
-          <div class="links">
-            <a class="btn btn-solid" href="https://raiyan-mahmud-git.github.io/chess-ai/" target="_blank" rel="noopener">Play it live<span class="sr">: Chess engine in the browser (opens in a new tab)</span></a>
-            <a class="btn-link" href="https://github.com/raiyan-mahmud-git/Chess-Ai" target="_blank" rel="noopener">Source code<span class="sr"> for the chess engine (opens in a new tab)</span></a>
-          </div>
-        </div>
-        <figure class="feature-fig">
-          <svg class="tree" viewBox="0 0 360 232" role="img" aria-label="Schematic search tree for alpha-beta pruning. The top node picks the best of three replies and scores 4. The middle reply is cut short after its first leaf scores 2, so its second leaf is never searched.">
-            <g class="edges" aria-hidden="true">
-              <line x1="180" y1="42" x2="60" y2="86"/><line x1="180" y1="42" x2="180" y2="86"/><line class="pick" x1="180" y1="42" x2="300" y2="86"/>
-              <line x1="60" y1="114" x2="30" y2="175"/><line x1="60" y1="114" x2="90" y2="175"/>
-              <line x1="180" y1="114" x2="150" y2="175"/><line class="cut" x1="180" y1="114" x2="210" y2="175"/>
-              <line x1="300" y1="114" x2="270" y2="175"/><line x1="300" y1="114" x2="330" y2="175"/>
-              <line class="mark" x1="187.8" y1="148" x2="202.2" y2="141"/>
-            </g>
-            <g aria-hidden="true">
-              <circle class="node best" cx="180" cy="28" r="14"/><text x="180" y="33" class="on-red">4</text>
-              <rect class="node" x="46" y="86" width="28" height="28" rx="5"/><text x="60" y="105">3</text>
-              <rect class="node" x="166" y="86" width="28" height="28" rx="5"/><text x="180" y="105">≤2</text>
-              <rect class="node" x="286" y="86" width="28" height="28" rx="5"/><text x="300" y="105">4</text>
-              <circle class="leaf" cx="30" cy="188" r="12"/><text x="30" y="193">3</text>
-              <circle class="leaf" cx="90" cy="188" r="12"/><text x="90" y="193">5</text>
-              <circle class="leaf" cx="150" cy="188" r="12"/><text x="150" y="193">2</text>
-              <circle class="leaf skipped" cx="210" cy="188" r="12"/>
-              <circle class="leaf" cx="270" cy="188" r="12"/><text x="270" y="193">6</text>
-              <circle class="leaf" cx="330" cy="188" r="12"/><text x="330" y="193">4</text>
-              <text class="note" x="210" y="222">skipped</text>
-              <text class="note lbl" x="2" y="33">max</text>
-              <text class="note lbl" x="2" y="132">min</text>
-            </g>
-          </svg>
-          <figcaption class="fig-cap">Schematic of alpha-beta pruning on a made-up tree. The top player takes the best reply (4). The middle reply already shows a leaf of 2, worse than the 3 found on the left, so its other leaf is never searched.</figcaption>
-          <ol class="chain" aria-label="Engine pipeline"><li>0x88 board</li><li>Alpha-beta negamax</li><li>Tapered evaluation</li><li>Best move</li></ol>
-        </figure>
-      </article>
-
-      <article class="feature" aria-labelledby="dm-t">
-        <div>
-          <h3 id="dm-t">DocuMind, document Q&amp;A that runs locally</h3>
-          <p class="stack">Python, FastAPI, Chroma, SQLite, sentence-transformers, Docker</p>
-          <p>A local-first system for asking questions about your own documents. It reads PDFs, images, Markdown and text, runs OCR on scanned pages, and finds the passages that answer a question with page citations. It can optionally draft an answer with an LLM, which is off by default. It runs as a web app, a command-line tool and a REST API, with a Docker Compose setup.</p>
-          <p class="note-priv"><b>Evaluation note.</b> On a hand-written set of 18 questions, adding a cross-encoder reranker raised Recall@1 from 0.944 to 1.000. The set is tiny, so treat it as a working example of the evaluation method, not a benchmark. The live page is a showcase with sample text; the full app runs on your own machine.</p>
-          <div class="links">
-            <a class="btn btn-solid" href="https://raiyan-mahmud-git.github.io/docu-mind/" target="_blank" rel="noopener">Open the live showcase<span class="sr"> of DocuMind (opens in a new tab)</span></a>
-            <a class="btn-link" href="https://github.com/raiyan-mahmud-git/docu-mind" target="_blank" rel="noopener">Source code<span class="sr"> for DocuMind (opens in a new tab)</span></a>
-          </div>
-        </div>
-        <figure class="feature-fig">
-          <ol class="flow" aria-label="How DocuMind works">
-            <li><b>Add documents</b><span>PDFs, images, Markdown and text, with local OCR for scans</span></li>
-            <li><b>Search</b><span>Vector search, with optional hybrid keyword (BM25) ranking</span></li>
-            <li><b>Rerank</b><span>Optional cross-encoder</span></li>
-            <li><b>Cited answer</b><span>Passages with page citations; LLM answers optional</span></li>
-          </ol>
-        </figure>
-      </article>
-
-      <article class="feature" aria-labelledby="flo-t">
-        <div>
-          <h3 id="flo-t">Flo, a personal finance tracker</h3>
-          <p class="stack">Vanilla JavaScript, HTML5, CSS3, PWA</p>
-          <p>A modular finance tracker with no backend, accounts or tracking. You track transactions, manage budgets and savings goals, visualize your spending, and keep working offline thanks to PWA support.</p>
-          <p class="note-priv"><b>Privacy note.</b> Data stays in your browser's localStorage on your own device. It is not encrypted and is lost if you clear site data, so this is a learning project, not a place for sensitive financial details.</p>
-          <p class="takeaway"><b>Takeaway.</b> Managing app state and persistence entirely in the browser with the LocalStorage API, with no backend.</p>
-          <div class="links">
-            <a class="btn btn-solid" href="https://raiyan-mahmud-git.github.io/finance-tracker/" target="_blank" rel="noopener">Open the live app<span class="sr"> Flo (opens in a new tab)</span></a>
-            <a class="btn-link" href="https://github.com/raiyan-mahmud-git/finance-tracker" target="_blank" rel="noopener">Source code<span class="sr"> for Flo (opens in a new tab)</span></a>
-          </div>
-        </div>
-        <figure class="feature-fig">
-          <img src="images/flo-screenshot.jpg" alt="Screenshot of the Flo finance tracker showing income, expenses and budgets" width="1200" height="750" loading="lazy" onerror="this.remove()">
-          <ol class="flow" aria-label="How Flo works">
-            <li><b>Track transactions</b><span>Income and expenses as they happen</span></li>
-            <li><b>Budgets and savings goals</b><span>Limits and targets you set</span></li>
-            <li><b>Visualize spending</b><span>Charts that update with every entry</span></li>
-            <li><b>Works offline</b><span>PWA support; data in local storage, unencrypted</span></li>
-          </ol>
-        </figure>
-      </article>
-
-      <article class="feature" aria-labelledby="dl-t">
+  <article class="feature" aria-labelledby="dl-t">
         <div>
           <h3 id="dl-t">TinyDL, deep learning from scratch</h3>
           <p class="origin">Inspired by Andrej Karpathy's micrograd</p>
@@ -605,12 +514,7 @@ footer{background:var(--paper)}
           </div>
         </div>
         <figure class="feature-fig">
-          <ol class="flow" aria-label="How TinyDL is built and checked">
-            <li><b>Tensors and autodiff</b><span>Vectorised, with broadcasting</span></li>
-            <li><b>Checked</b><span>Gradient checks and PyTorch comparison</span></li>
-            <li><b>Trained on MNIST</b><span>MLP with Adam, 5 seeds</span></li>
-            <li><b>97.34% accuracy</b><span>Test set, 10,000 images</span></li>
-          </ol>
+          <img src="images/tinydl-preview.png" alt="TinyDL browser demo with a hand-drawn digit and its prediction" width="977" height="970" loading="lazy">
         </figure>
       </article>
 
@@ -618,20 +522,27 @@ footer{background:var(--paper)}
       <div class="more">
         <article class="more-item" aria-labelledby="bs-t">
           <h3 id="bs-t">Book Price Scraper</h3>
+          <img class="more-shot" src="images/book-tracker.png" alt="Book price tracker dashboard listing books with prices and stock status" width="1457" height="973" loading="lazy">
           <p class="stack">Python, SQLite, pytest</p>
           <p>A cross-platform tool that tracks book prices from the Books to Scrape practice site, saves the price history in SQLite and exports it to CSV, JSON or Excel. A live dashboard lets you browse the books, recent price changes and a watchlist. Its tests run offline against saved HTML.</p>
-          <ol class="chain" aria-label="Pipeline"><li>Books to Scrape</li><li>Parse HTML</li><li>SQLite price history</li><li>CSV, JSON or Excel</li></ol>
           <div class="links"><a class="btn-link" href="https://book-price-tracker.fly.dev/" target="_blank" rel="noopener">Live app<span class="sr">: Book Price Scraper (opens in a new tab)</span></a><a class="btn-link" href="https://github.com/raiyan-mahmud-git/book_Price_Scraper" target="_blank" rel="noopener">Source code<span class="sr"> for Book Price Scraper (opens in a new tab)</span></a></div>
         </article>
 
         <article class="more-item" aria-labelledby="cd-t">
           <h3 id="cd-t">Cats &amp; Dogs Image Classifier</h3>
+          <img class="more-shot" src="images/cats-dogs.png" alt="Image classifier dashboard with cat prediction, confidence and Grad-CAM heatmap" width="1916" height="973" loading="lazy">
           <p class="origin">Extended from a freeCodeCamp challenge</p>
           <p class="stack">Python, TensorFlow, Keras, Streamlit, FastAPI</p>
           <p>A 74% baseline CNN rebuilt with MobileNetV2 transfer learning, reaching 98.0% on the official 50-image test set. Grad-CAM shows what the model looks at, and a Streamlit app and FastAPI service run it, backed by 42 automated tests.</p>
-          <ol class="chain" aria-label="Pipeline"><li>Baseline CNN, 74%</li><li>MobileNetV2, 98%</li><li>Grad-CAM</li><li>Streamlit and FastAPI</li></ol>
-          <p class="note-priv">98.0% is 49 of 50 test images, a small sample.</p>
           <div class="links"><a class="btn-link" href="https://cats-and-dogs-image-classifier.streamlit.app/" target="_blank" rel="noopener">Live app<span class="sr">: Cats and Dogs Image Classifier (opens in a new tab)</span></a><a class="btn-link" href="https://github.com/raiyan-mahmud-git/Cats-and-dogs-image-classifier" target="_blank" rel="noopener">Source code<span class="sr"> for Cats and Dogs Image Classifier (opens in a new tab)</span></a></div>
+        </article>
+
+        <article class="more-item" aria-labelledby="rps-t">
+          <h3 id="rps-t">RPS Arena, adaptive rock-paper-scissors AI</h3>
+          <img class="more-shot" src="images/rps-arena.png" alt="RPS Arena game showing its Markov AI mode, player move, scoreboard and tracked play habits" width="1291" height="973" loading="lazy">
+          <p class="stack">Python, machine learning, JavaScript</p>
+          <p>A rock-paper-scissors game where the AI tracks your move patterns and adapts its next move. Choose Classic or Lizard-Spock mode and test the AI at different difficulty levels.</p>
+          <div class="links"><a class="btn-link" href="https://rock-paper-scissors-ten-gilt.vercel.app/" target="_blank" rel="noopener">Play it live<span class="sr">: RPS Arena (opens in a new tab)</span></a><a class="btn-link" href="https://github.com/raiyan-mahmud-git/rock-paper-scissors_ml_project" target="_blank" rel="noopener">Source code<span class="sr"> for RPS Arena (opens in a new tab)</span></a></div>
         </article>
       </div>
 
@@ -879,49 +790,25 @@ if('IntersectionObserver' in window){
   heroObs.observe($('#top'));
 }
 
-/* hero figure */
-var fig=$('[data-knn]');
-if(fig){
-  var svg=$('svg',fig),sample=$('.sample',fig),lk=$$('.link',fig),out=$('[data-out]',fig);
-  var pts=$$('.pt',fig).map(function(el){return{el:el,x:+el.getAttribute('cx'),y:+el.getAttribute('cy'),k:el.getAttribute('data-k')}});
-  var names={a:'not spam',b:'spam'},raf=0,next=null;
-  function place(x,y){
-    x=Math.max(60,Math.min(530,x));y=Math.max(34,Math.min(386,y));
-    var d=pts.map(function(p){return{p:p,d:(p.x-x)*(p.x-x)+(p.y-y)*(p.y-y)}}).sort(function(a,b){return a.d-b.d}).slice(0,5);
-    pts.forEach(function(p){p.el.classList.remove('nn')});
-    var a=0;
-    d.forEach(function(o,i){o.p.el.classList.add('nn');if(o.p.k==='a')a++;
-      var l=lk[i];l.setAttribute('x1',x);l.setAttribute('y1',y);l.setAttribute('x2',o.p.x);l.setAttribute('y2',o.p.y)});
-    sample.setAttribute('transform','translate('+x+' '+y+')');
-    var win=a>2?'a':'b';
-    out.textContent='5 nearest messages: '+a+' not spam, '+(5-a)+' spam. The red sample is classified as '+names[win]+'.';
-  }
-  function at(e){
-    var r=svg.getBoundingClientRect();next=[(e.clientX-r.left)*560/r.width,(e.clientY-r.top)*440/r.height];
-    if(!raf)raf=requestAnimationFrame(function(){raf=0;place(next[0],next[1])});
-  }
-  svg.addEventListener('pointermove',function(e){if(e.pointerType!=='touch')at(e)});
-  svg.addEventListener('pointerdown',at);
-}
-
-
-  
 /* certificate preview */
 var dlg=$('#certDialog'),dImg=$('#dlgImg'),dTitle=$('#dlgTitle'),dVerify=$('#dlgVerify'),opener=null;
+function showImage(img,title,verify){
+  if(typeof dlg.showModal!=='function'){window.open(img.currentSrc||img.src,'_blank','noopener');return}
+  opener=img;dImg.src=img.currentSrc||img.src;dImg.alt=img.alt||title;dTitle.textContent=title;
+  dVerify.parentElement.hidden=!verify;if(verify)dVerify.href=verify;dlg.showModal();
+}
 $$('.thumb').forEach(function(btn){
   btn.addEventListener('click',function(){
     var li=btn.closest('.cert'),img=$('img',btn);
-    if(typeof dlg.showModal!=='function'){window.open(img.currentSrc||img.src,'_blank','noopener');return}
-    opener=btn;
-    dImg.src=img.currentSrc||img.src;
-    dImg.alt='Certificate: '+li.dataset.title+', issued by '+li.dataset.by;
-    dTitle.textContent=li.dataset.title+', '+li.dataset.by;
-    dVerify.href=li.dataset.verify;
-    dlg.showModal();
+    showImage(img,'Certificate: '+li.dataset.title+', '+li.dataset.by,li.dataset.verify);
   });
 });
+$$('.feature-fig img,.chess-shot,.more-shot').forEach(function(img){
+  img.tabIndex=0;img.setAttribute('role','button');img.setAttribute('aria-haspopup','dialog');img.setAttribute('aria-label','Expand image: '+img.alt);
+  function open(){showImage(img,img.alt||'Project screenshot',null)}
+  img.addEventListener('click',open);img.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}});
+});
 $('#dlgClose').addEventListener('click',function(){dlg.close()});
-
 dlg.addEventListener('click',function(e){if(e.target===dlg)dlg.close()});
 dlg.addEventListener('close',function(){if(opener){opener.focus();opener=null}});
 
