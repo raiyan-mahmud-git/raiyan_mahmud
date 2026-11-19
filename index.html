@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f1f5ee" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0a1814" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#1b1917" media="(prefers-color-scheme: dark)">
 <script>
 
 document.documentElement.classList.add('js');
@@ -360,12 +360,12 @@ footer a{color:#fff}
   --display:var(--body);--radius:6px;--radius-lg:8px;
 }
 @supports (color:light-dark(#000,#fff)){:root{
-  --paper:light-dark(#f7f8fa,#111820);--paper-2:light-dark(#eef1f4,#1a242e);
-  --ink:light-dark(#17212b,#edf1f4);--ink-soft:light-dark(#52606d,#aab5bf);
-  --green:light-dark(#176b53,#72c6a5);--red:light-dark(#176b53,#72c6a5);--disc:light-dark(#176b53,#72c6a5);
-  --line:light-dark(#d7dde3,#34414d);--focus:light-dark(#176b53,#9be0c3);
-  --band:light-dark(#17212b,#0b1117);--band-ink:light-dark(#f7f8fa,#edf1f4);
-  --band-soft:light-dark(#c2ccd4,#aab5bf);--band-line:light-dark(rgba(247,248,250,.2),rgba(237,241,244,.18));
+  --paper:light-dark(#f7f8fa,#1b1917);--paper-2:light-dark(#eef1f4,#2a2622);
+  --ink:light-dark(#17212b,#f4eee6);--ink-soft:light-dark(#52606d,#c1b7aa);
+  --green:light-dark(#176b53,#ed9843);--red:light-dark(#176b53,#ed9843);--disc:light-dark(#176b53,#ed9843);
+  --line:light-dark(#d7dde3,#453c33);--focus:light-dark(#176b53,#f2b76f);
+  --band:light-dark(#17212b,#141210);--band-ink:light-dark(#f7f8fa,#f4eee6);
+  --band-soft:light-dark(#c2ccd4,#c1b7aa);--band-line:light-dark(rgba(247,248,250,.2),rgba(244,238,230,.18));
 }}
 body{background:var(--paper)}
 .nav{background:var(--paper);backdrop-filter:none;-webkit-backdrop-filter:none}
@@ -501,7 +501,7 @@ footer{background:var(--paper)}
         </figure>
       </article>
 
-  <article class="feature" aria-labelledby="dl-t">
+      <article class="feature" aria-labelledby="dl-t">
         <div>
           <h3 id="dl-t">TinyDL, deep learning from scratch</h3>
           <p class="origin">Inspired by Andrej Karpathy's micrograd</p>
@@ -665,7 +665,7 @@ footer{background:var(--paper)}
   <section class="sec contact" id="contact" aria-labelledby="contact-title">
     <div class="wrap contact-grid">
       <div>
-        <p class="sec-no" aria-hidden="true"></p>
+        <p class="sec-no" aria-hidden="true">05</p>
         <h2 id="contact-title">Get in touch</h2>
         <p class="pitch">I am open to academic opportunities, collaborations and projects in computer science, machine learning and software development.</p>
         <div class="c-list">
@@ -738,7 +738,7 @@ var meta=$('meta[name="color-scheme"]'),dark=matchMedia('(prefers-color-scheme: 
 var themeMetas=$$('meta[name="theme-color"]'),themeBase=themeMetas.map(function(m){return m.content});
 function rendered(){return meta.content==='dark'||meta.content==='light'?meta.content:(dark.matches?'dark':'light')}
 function syncThemeColor(){
-  var pin=meta.content==='dark'?'#0a1814':meta.content==='light'?'#f1f5ee':null;
+  var pin=meta.content==='dark'?'#1b1917':meta.content==='light'?'#f1f5ee':null;
   themeMetas.forEach(function(m,i){m.content=pin||themeBase[i]});
 }
 $('#themeBtn').addEventListener('click',function(){
